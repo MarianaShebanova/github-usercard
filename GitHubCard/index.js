@@ -36,6 +36,7 @@ function cards(obj) {
   pLocation.textContent = 'Location: ' + obj.data.location;
   pProfile.textContent = 'Profile:';
   a.href = obj.data.html_url;
+  a.textContent = obj.data.html_url;
   pFollowers.textContent = 'Followers: ' + obj.data.followers;
   pFollowing.textContent = 'Following: ' + obj.data.following;
   pBio.textContent = 'Bio: ' + obj.data.bio;
@@ -53,6 +54,7 @@ function cards(obj) {
   card.appendChild(img);
   card.appendChild(cardInfo);
 
+  console.log(card);
   return card;
 }
 const parent = document.querySelector('.cards');
