@@ -9,6 +9,65 @@
 
    Skip to Step 3.
 */
+function cards(obj) {
+  //new
+  const card = document.createElement('div');
+  const img = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const h3 = document.createElement('h3');
+  const pUserName = document.createElement('p');
+  const pLocation = document.createElement('p');
+  const pProfile = document.createElement('p');
+  const a = document.createElement('a');
+  const pFollowers = document.createElement('p');
+  const pFollowing = document.createElement('p');
+  const pBio = document.createElement('p');
+  
+  //class
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  h3.classList.add('name');
+  pUserName.classList.add('username');
+
+  //content
+  img.src = obj.data.avatar_url;
+  h3.textContent = obj.data.name;
+  pUserName.textContent = obj.data.name;
+  pLocation.textContent = 'Location: ' + obj.data.location;
+  pProfile.textContent = 'Profile:';
+  a.href = obj.data.html_url;
+  pFollowers.textContent = 'Followers: ' + obj.data.followers;
+  pFollowing.textContent = 'Following: ' + obj.data.following;
+  pBio.textContent = 'Bio: ' + obj.data.bio;
+
+  //Setup structure
+  
+  pProfile.appendChild(a);
+  cardInfo.appendChild(h3);
+  cardInfo.appendChild(pUserName);
+  cardInfo.appendChild(pLocation);
+  cardInfo.appendChild(pProfile);
+  cardInfo.appendChild(pFollowers);
+  cardInfo.appendChild(pFollowing);
+  cardInfo.appendChild(pBio);
+  card.appendChild(img);
+  card.appendChild(cardInfo);
+
+  return card;
+}
+const parent = document.querySelector('.cards');
+
+axios.get('https://api.github.com/users/MarianaShebanova')
+  .then(response => {
+    //Step 2
+    //console.log(response);
+    //Step 4
+    parent.appendChild(cards(response));
+
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
@@ -24,7 +83,25 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan',
+                        'dustinmyers',
+                         'justsml',
+                          'luishrd',
+                          'bigknell'];
+
+followersArray.forEach(item => {
+  axios.get('https://api.github.com/users/' + item)
+    .then(response => {
+      //Step 2
+      //console.log(response);
+      //Step 4
+      parent.appendChild(cards(response));
+
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
